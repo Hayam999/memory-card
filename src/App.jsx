@@ -1,35 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import MagicLoading from "./components/MagicLoading";
+import bgVideo from "./assets/background.mp4";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [loading, setLoading] = useState(true);
+  const vedioRef = useRef(null);
+
+  useEffect(() => {
+    if (vedioRef.current) {
+      vedioRef.current.play().catch((err) => {
+        console.log("Failed to loade background vedio: ", err);
+      });
+    }
+  });
+  useEffect(() => {
+    // Increase loading time to 5 seconds
+    const timer = setTimeout(() => setLoading(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            key="loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.6 } }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 10,
+              background: "black",
+            }}
+          >
+            <MagicLoading />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {!loading && (
+          <motion.div
+            key="video"
+            initial={{ scale: 0, opacity: 0.5 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 0,
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "black",
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              ref={vedioRef}
+              playsInline
+              style={{
+                width: "100vw",
+                height: "100vh",
+                objectFit: "cover",
+                borderRadius: 0,
+              }}
+            >
+              <source src={bgVideo} type="video/mp4" />
+            </video>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* ...rest of your app content here... */}
+    </div>
+  );
 }
-
-export default App
