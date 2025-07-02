@@ -31,7 +31,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogo(true);
-    }, 10000);
+    }, 9000);
     return () => clearTimeout(timer);
   }, []);
 
