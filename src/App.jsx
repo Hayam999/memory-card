@@ -1,22 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MagicLoading from "./components/MagicLoading";
-import bgVideo from "./assets/background.mp4";
+import bgVedio from "./assets/background.mp4";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [reveal, setReveal] = useState(false);
+  const audioRef = useRef(null);
   const vedioRef = useRef(null);
 
   useEffect(() => {
     if (vedioRef.current) {
       vedioRef.current.play().catch((err) => {
-        console.log("Failed to loade background vedio: ", err);
+        console.log("Failed to load background Vedio: ", err);
       });
     }
-  });
+  }, []);
+
   useEffect(() => {
-    // Increase loading time to 5 seconds
-    const timer = setTimeout(() => setLoading(false), 5000);
+    const timer = setTimeout(() => {
+      setLoading(false);
+      setReveal(true);
+      // Play sound when reveal starts
+      if (audioRef.current) {
+        audioRef.current.play();
+      }
+    }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -70,7 +79,8 @@ export default function App() {
                 borderRadius: 0,
               }}
             >
-              <source src={bgVideo} type="video/mp4" />
+              <source src={bgVedio} type="video/mp4" />
+              {/* Or: <source src={bgVideo} type="video/mp4" /> */}
             </video>
           </motion.div>
         )}
