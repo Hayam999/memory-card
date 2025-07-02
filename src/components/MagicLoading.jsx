@@ -45,7 +45,7 @@ export default function MagicLoading() {
             letterSpacing: 2,
           }}
         >
-          Unleashing Magic
+          Loading
         </span>
         <motion.span
           style={{ display: "flex", marginLeft: 8 }}

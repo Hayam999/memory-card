@@ -2,11 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MagicLoading from "./components/MagicLoading";
 import bgVedio from "./assets/background.mp4";
+import styles from "./App.module.css";
+import MemoryCardLogo from "./components/MemoryCardLogo";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [reveal, setReveal] = useState(false);
-  const audioRef = useRef(null);
+  const [showLogo, setShowLogo] = useState(false);
+
   const vedioRef = useRef(null);
 
   useEffect(() => {
@@ -21,11 +24,14 @@ export default function App() {
     const timer = setTimeout(() => {
       setLoading(false);
       setReveal(true);
-      // Play sound when reveal starts
-      if (audioRef.current) {
-        audioRef.current.play();
-      }
     }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLogo(true);
+    }, 10000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -85,7 +91,7 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* ...rest of your app content here... */}
+      {showLogo && <MemoryCardLogo />}
     </div>
   );
 }

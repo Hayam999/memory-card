@@ -3,6 +3,18 @@ body,
   cursor: url("./assets/cursor3.svg"), auto;
 }
 
+.memoryCardLogo {
+  cursor: url("./assets/pointer-cursor.svg"), auto;
+}
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -15,6 +27,8 @@ body,
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --logo-width: 35vw;
 }
 
 a {
