@@ -87,3 +87,11 @@ button:focus-visible {
     url("./assets/pointer-cursor.svg") 16 16,
     auto;
 }
+
+.musicIcon {
+  position: absolute;
+  bottom: 5vw;
+  left: 5vw;
+  max-width: 5vw;
+  z-index: 5;
+}

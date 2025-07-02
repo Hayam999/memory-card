@@ -1,5 +1,5 @@
 .memoryCardLogo {
-  position: relative;
+  position: absolute;
   left: calc(80vw - calc(var(--logo-width) / 2));
   bottom: 0;
   z-index: 20;

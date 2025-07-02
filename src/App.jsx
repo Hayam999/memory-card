@@ -5,12 +5,16 @@ import MagicLoading from "./components/MagicLoading";
 import MemoryCardLogo from "./components/MemoryCardLogo";
 import bgVedio from "./assets/background.mp4";
 import bgMusic from "./assets/bgMusic.mp3";
+import musicOn from "./assets/musicOn.svg";
+import musicOff from "./assets/musicOff.svg";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [reveal, setReveal] = useState(false);
   const [showLogo, setShowLogo] = useState(false);
   const [startBgMusic, setStartBgMusic] = useState(false);
+  const [musicIconState, setMusicIconState] = useState(false);
+  const [showMusicIcon, setShowMusicIcon] = useState(false);
 
   const vedioRef = useRef(null);
   const bgMusicRef = useRef(null);
@@ -34,16 +38,18 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogo(true);
+      setShowMusicIcon(true);
     }, 9000);
     return () => clearTimeout(timer);
   }, []);
+
   useEffect(() => {
     if (bgMusicRef.current) {
       bgMusicRef.current.play().catch((err) => {
         console.log("Failed to load BackGround Music: ", err);
       });
     }
-  });
+  }, []);
 
   return (
     <div>
@@ -101,9 +107,21 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      {showLogo && <MemoryCardLogo setMusicSign={setStartBgMusic} />}
+      {showLogo && (
+        <MemoryCardLogo
+          setMusicSign={setStartBgMusic}
+          setIcon={setMusicIconState}
+        />
+      )}
       {startBgMusic && (
         <audio ref={bgMusicRef} src={bgMusic} preload="auto" loop></audio>
+      )}
+      {showMusicIcon && (
+        <img
+          src={musicIconState ? musicOn : musicOff}
+          alt="Music icon"
+          className="musicIcon"
+        />
       )}
     </div>
   );

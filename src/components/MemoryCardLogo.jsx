@@ -2,7 +2,7 @@ import { easeIn, easeOut, motion } from "framer-motion";
 import styles from "../App.module.css";
 import logo from "../assets/logo.svg";
 
-function MemoryCardLogo({ setMusicSign }) {
+function MemoryCardLogo({ setMusicSign, setIcon }) {
   return (
     <motion.div
       initial={{ scale: 0 }}
@@ -16,7 +16,10 @@ function MemoryCardLogo({ setMusicSign }) {
         id="memoLogo"
         src={logo}
         alt="Memory Card Logo"
-        onClick={() => setMusicSign(true)}
+        onClick={() => {
+          setMusicSign(true);
+          setIcon(true);
+        }}
       />
     </motion.div>
   );
