@@ -4,4 +4,8 @@
 [x] Change the cursor to cursor3.svg
 [x] Add loading animation
 
-[ ] Add Logo with starting functionaliy
+[x] Add component (MemoryCardLogo)
+[ ] feat(MemoryCardLogo): Change cursor view to pointer-cursor.svg
+[ ] set the background music and button
+[ ] Add sound Effects with it's button
+[ ] Add motion to MemoryCardLogo enter

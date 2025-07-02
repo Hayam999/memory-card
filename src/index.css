@@ -3,9 +3,6 @@ body,
   cursor: url("./assets/cursor3.svg"), auto;
 }
 
-.memoryCardLogo {
-  cursor: url("./assets/pointer-cursor.svg"), auto;
-}
 html,
 body {
   height: 100%;
@@ -83,4 +80,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+#memoLogo {
+  cursor:
+    url("./assets/pointer-cursor.svg") 16 16,
+    auto;
 }
