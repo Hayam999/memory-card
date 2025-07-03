@@ -114,13 +114,28 @@ export default function App() {
         />
       )}
       {startBgMusic && (
-        <audio ref={bgMusicRef} src={bgMusic} preload="auto" loop></audio>
+        <audio
+          ref={bgMusicRef}
+          src={bgMusic}
+          preload="auto"
+          loop
+          autoPlay
+          playsInline
+          className="bgMusic"
+        ></audio>
       )}
       {showMusicIcon && (
-        <img
+        <motion.img
+          initial={{ rotate: 0, scale: 0.95 }}
+          animate={{ rotate: 360 * 10, scale: [1.5, 1] }}
+          transition={{ duration: 1, ease: "easeOut" }}
           src={musicIconState ? musicOn : musicOff}
           alt="Music icon"
           className="musicIcon"
+          onClick={() => {
+            setStartBgMusic(!startBgMusic);
+            setMusicIconState(!musicIconState);
+          }}
         />
       )}
     </div>

@@ -82,9 +82,10 @@ button:focus-visible {
   }
 }
 
-#memoLogo {
+#memoLogo,
+.musicIcon {
   cursor:
-    url("./assets/pointer-cursor.svg") 16 16,
+    url("./assets/pointer-cursor.svg") 0 0,
     auto;
 }
 
@@ -94,4 +95,12 @@ button:focus-visible {
   left: 5vw;
   max-width: 5vw;
   z-index: 5;
+}
+.bgMusic {
+  display: block !important;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
 }
