@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import backLogo from "../assets/back-logo.svg";
 import { div } from "motion/react-client";
 import Cards from "./cards";
-
+import changeLvl from "../assets/change-level.svg";
+import backHome from "../assets/backHome.svg";
 function Levels({ setShowLogo, setShowLevels }) {
   const [imgsPerRender, setImgsPerRender] = useState(0);
   const [totalRenders, setTotalRenders] = useState(0);
@@ -72,6 +73,25 @@ function Levels({ setShowLogo, setShowLevels }) {
             pointsPerRound={pointsPerRound}
             totalImgsPerRound={totalImgsPerRound}
           />
+          <div className="navBtns">
+            <button
+              className="button-73"
+              onClick={() => {
+                setShowLevels(false);
+                setShowLogo(true);
+              }}
+            >
+              Home
+            </button>
+            <button
+              className="button-73"
+              onClick={() => {
+                setPlay(false);
+              }}
+            >
+              Back
+            </button>
+          </div>
         </div>
       )}
     </>
