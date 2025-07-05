@@ -123,14 +123,16 @@ h1 {
   width: var(--logo-width);
 }
 
-.lvlsWrapper {
+.lvlsWrapper,
+.playingArea {
   display: flex;
   min-width: 100vw;
   min-height: 100vw;
   align-items: center;
   justify-content: center;
 }
-.levels {
+.levels,
+.cardsArea {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -141,7 +143,6 @@ h1 {
   align-items: center;
   width: 40ch;
   background-color: rgba(251, 225, 240, 0.6);
-
   border: none;
   border-radius: 32px;
   padding: 5%;

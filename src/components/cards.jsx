@@ -11,7 +11,12 @@ function Card({ img, name }) {
   );
 }
 
-function Cards() {
+function Cards({
+  imgsPerRender,
+  totalRenders,
+  pointsPerRound,
+  totalImgsPerRound,
+}) {
   const [gifs, setGifs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("harry potter");
   const API_KEY = "natH5L3yloaSv21R6tsRZWQ89D1Nml6F";
@@ -52,7 +57,7 @@ function Cards() {
   }, [searchTerm]);
 
   return (
-    <>
+    <div className="cardsArea">
       {gifs.map((gif) => {
         return (
           <div key={gif.id}>
@@ -60,7 +65,7 @@ function Cards() {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 
