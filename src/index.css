@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "schoolbellregular";
+  src:
+    url("./fonts/schoolbell-regular-webfont.woff2") format("woff2"),
+    url("./fonts/schoolbell-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body,
 * {
   cursor: url("./assets/cursor3.svg"), auto;
@@ -13,7 +23,17 @@ body {
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family:
+    "schoolbellregular",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
+
   line-height: 1.5;
   font-weight: 400;
 
@@ -50,25 +70,6 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -84,7 +85,8 @@ button:focus-visible {
 
 #memoLogo,
 .musicIcon,
-.button-73 {
+.button-73,
+.goBackLogo {
   cursor:
     url("./assets/pointer-cursor.svg") 0 0,
     auto;
@@ -138,7 +140,8 @@ button:focus-visible {
   gap: 5vh;
   align-items: center;
   width: 40ch;
-  background-color: rgba(253, 236, 239, 0.6);
+  background-color: rgba(251, 225, 240, 0.6);
+
   border: none;
   border-radius: 32px;
   padding: 5%;
@@ -165,7 +168,7 @@ button:focus-visible {
   color: #000000;
 
   display: inline-block;
-  font-family: -apple-system, sans-serif;
+  font-family: inherit;
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: -0.24px;
@@ -207,4 +210,8 @@ button:focus-visible {
     font-size: 1.5rem;
     padding: 0.75rem 2rem;
   }
+}
+
+.goBackLogo {
+  max-width: 15vw;
 }

@@ -142,7 +142,9 @@ export default function App() {
           }}
         />
       )}
-      {showLevels && <Levels />}
+      {showLevels && (
+        <Levels setShowLogo={setShowLogo} setShowLevels={setShowLevels} />
+      )}
     </div>
   );
 }
