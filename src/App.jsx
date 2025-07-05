@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import styles from "./App.module.css";
+
 import MagicLoading from "./components/MagicLoading";
 import MemoryCardLogo from "./components/MemoryCardLogo";
+import Levels from "./components/Levels";
 import bgVedio from "./assets/background.mp4";
 import bgMusic from "./assets/bgMusic.mp3";
 import musicOn from "./assets/musicOn.svg";
@@ -15,6 +16,7 @@ export default function App() {
   const [startBgMusic, setStartBgMusic] = useState(false);
   const [musicIconState, setMusicIconState] = useState(false);
   const [showMusicIcon, setShowMusicIcon] = useState(false);
+  const [showLevels, setShowLevels] = useState(false);
 
   const vedioRef = useRef(null);
   const bgMusicRef = useRef(null);
@@ -111,6 +113,8 @@ export default function App() {
         <MemoryCardLogo
           setMusicSign={setStartBgMusic}
           setIcon={setMusicIconState}
+          setShowLogo={setShowLogo}
+          setShowLevels={setShowLevels}
         />
       )}
       {startBgMusic && (
@@ -138,6 +142,7 @@ export default function App() {
           }}
         />
       )}
+      {showLevels && <Levels />}
     </div>
   );
 }

@@ -1,14 +1,15 @@
-import { easeIn, easeOut, motion } from "framer-motion";
-import styles from "../App.module.css";
+import { easeIn, motion } from "framer-motion";
+
 import logo from "../assets/logo.svg";
 
-function MemoryCardLogo({ setMusicSign, setIcon }) {
+function MemoryCardLogo({ setMusicSign, setIcon, setShowLogo, setShowLevels }) {
   return (
     <motion.div
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 1.8, ease: easeIn }}
-      className={styles.memoryCardLogo}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1, ease: easeIn }}
+      exit={{ opacity: 0, scale: 0 }}
+      className="memoryCardLogo"
     >
       <motion.img
         whileHover={{ scale: 1.1 }}
@@ -19,6 +20,8 @@ function MemoryCardLogo({ setMusicSign, setIcon }) {
         onClick={() => {
           setMusicSign(true);
           setIcon(true);
+          setShowLogo(false);
+          setShowLevels(true);
         }}
       />
     </motion.div>

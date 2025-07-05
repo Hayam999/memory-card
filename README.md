@@ -13,7 +13,7 @@ If you are developing a production application, we recommend using TypeScript wi
 
 #Credits
 
-Music by <a href="https://pixabay.com/users/mfcc-28627740/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=279835">Mykola Sosin</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=279835">Pixabay</a>
+Music by <a href="https://pixabay.com/users/backgroundmusicforvideos-46459014/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=322164">Maksym Malko</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=322164">Pixabay</a>
 
 <a href="https://www.flaticon.com/free-icons/music-off" title="music off icons">Music off icons created by kawalanicon - Flaticon</a>
 

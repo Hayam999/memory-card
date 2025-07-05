@@ -6,6 +6,7 @@
 
 [x] Add component (MemoryCardLogo)
 [x] feat(MemoryCardLogo): Change cursor view to pointer-cursor.svg
-[ ] set the background music and button
+[x] Add motion to MemoryCardLogo enter
+[x] set the background music and button
+[ ] Add Levels component
 [ ] Add sound Effects with it's button
-[ ] Add motion to MemoryCardLogo enter
