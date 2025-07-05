@@ -6,9 +6,9 @@ function Levels() {
       <motion.div className="levels">
         <h1 id="memoHeader">Memory Card</h1>
         <div className="lvlsBtns">
-          <button>Easy</button>
-          <button>Medium</button>
-          <button>Hard</button>
+          <button className="button-73">Easy</button>
+          <button className="button-73">Medium</button>
+          <button className="button-73">Hard</button>
         </div>
       </motion.div>
     </div>
