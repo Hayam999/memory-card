@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
-
-function Card({ img }) {
-  return (
-    <div>
-      <img src={img} alt="img" />
-    </div>
-  );
-}
+import flippedImg from "../assets/backHome.svg";
+/* [ ] replace flippedImg with an image of one of the ghost and write memory card under it  */
 
 function Cards({
   imgsPerRender,
@@ -62,41 +56,169 @@ function Cards({
     getImages(searchTerm);
   }, [searchTerm]);
 
+  /* [ ] fetch background music to display while playing */
   return (
     <div className="cardsArea">
       {loading ? (
+        /* [ ] style loading div */
         <div>Loading...</div>
       ) : error ? (
+        /* [ ] make a sad character from the ghosts to display in the error div with a retry button */
         <div style={{ color: "red" }}>{error}</div>
       ) : (
+        /* [ ] display fetched music */
         <Play
           newImgs={imgs}
-          oldImgs={[]}
           totalRenders={totalRenders}
           pointsPerRound={pointsPerRound}
+          imgsPerRender={imgsPerRender}
         />
       )}
     </div>
   );
 }
 
-function Play({ newImgs, oldImgs, totalRenders, pointsPerRound }) {
-  /* 1_ if used images.length is <= 1:
-            Add 3 new images
-            else:
-             a- choose a random number from 1 to the limited images per render - 1
-            if there are suffecient used images for it
-            reapat to reach 0: 
-                 - choose a random number from 0 to used_images.length to be the index of the used image that you will display
-            else: go back to a;
-            render limited-images - random-used images times , new images
-          2_ when one of them are clicked:
-                1_save clicked img id in the used images[];
-                2_ flip all images;
-          3_ go back to step 1; repeat until you end rounds and the player wins the round or until he loses 
-         */
+function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
+  const [currentCards, setCurrentCards] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
+  const [flipCards, setFlipCards] = useState(false);
+  const [renderNum, setRenderNum] = useState(0);
+  const [score, setScore] = useState(0);
+  const [wonRound, setWonRound] = useState(false);
+  const [heighstScore, setHeighstScore] = useState(0);
+  const [clickedImgs, setClickedImgs] = useState([]);
+  const flippedCards = [];
+  const handlePlayAgain = () => {
+    setClickedImgs([]);
+    setCurrentCards(chooseCards());
+    setGameOver(false);
+    setFlipCards(false);
+    setRenderNum(0);
+    setHeighstScore(score > heighstScore ? score : heighstScore);
+    setWonRound(false);
+  };
+  const handleClick = (img) => {
+    setRenderNum(renderNum + 1);
+    if (clickedImgs.includes(img)) {
+      setGameOver(true);
+    } else if (renderNum === totalRenders) {
+      setScore(score + pointsPerRound);
+      setWonRound(true);
+    } else {
+      setScore(score + 1);
+      setFlipCards(true);
+      clickedImgs.push(img);
+      setCurrentCards(chooseCards);
+    }
+  };
 
-  return <></>;
+  function PlayAgain() {
+    return <button onClick={handlePlayAgain}>Play Again</button>;
+  }
+  function chooseCards() {
+    const cards = [];
+    const ids = [];
+    if (clickedImgs.length <= 1) {
+      for (let i = 0; i < imgsPerRender; i++) {
+        const img = newImgs[i];
+        cards.push(
+          <div key={img.id}>
+            <img
+              src={img.webformatURL}
+              alt="img"
+              onClick={() => handleClick(img)}
+            />
+          </div>,
+        );
+      }
+    } else {
+      //Assure there will be at least 1 new Image every Render //
+      const index = Math.floor(Math.random() * newImgs.length);
+      const img = newImgs[index];
+      ids.push(img.id);
+      cards.push(
+        <div key={img.id}>
+          <img
+            src={img.webformatURL}
+            alt="img"
+            onClick={() => handleClick(img)}
+          />
+        </div>,
+      );
+      const numOfOldCards = Math.floor(Math.random() * clickedImgs.length);
+      const numOfNewCards = imgsPerRender - 1 - numOfOldCards;
+
+      for (let i = 1; i <= numOfOldCards; i++) {
+        let index = Math.floor(Math.random() * clickedImgs.length);
+        while (ids.includes(clickedImgs[index].id)) {
+          index = Math.floor(Math.random() * clickedImgs.length);
+        }
+        const img = clickedImgs[index];
+        ids.push(img.id);
+        cards.push(
+          <div key={img.id}>
+            <img
+              src={img.webformatURL}
+              alt="img"
+              onClick={() => handleClick(img)}
+            />
+          </div>,
+        );
+      }
+      for (let i = 1; i <= numOfNewCards; i++) {
+        let index = Math.floor(Math.random() * newImgs.length);
+        while (ids.includes(newImgs[index].id)) {
+          index = Math.floor(Math.random() * newImgs.length);
+        }
+        const img = newImgs[index];
+        ids.push(img.id);
+        cards.push(
+          <div key={img.id}>
+            <img
+              src={img.webformatURL}
+              alt="img"
+              onClick={() => handleClick(img)}
+            />
+          </div>,
+        );
+      }
+    }
+    return cards;
+  }
+  useEffect(() => {
+    setCurrentCards(chooseCards());
+    {
+      for (let i = 0; i < imgsPerRender; i++) {
+        flippedCards.push(
+          <div className="flippedImg">
+            <img src={flippedImg} alt="Flipped Image" />
+          </div>,
+        );
+      }
+    }
+  }, []);
+
+  return (
+    <>
+      <div>
+        <div>Score: {score}</div>
+        <div>Heights Score: {heighstScore}</div>
+      </div>
+      {!gameOver && !wonRound && flipCards ? flippedCards : currentCards}
+      {gameOver && (
+        <div>
+          {" "}
+          <div>Game Over</div> <PlayAgain />{" "}
+        </div>
+      )}
+      {wonRound && (
+        <div>
+          <div>You Win</div>
+          <PlayAgain />
+        </div>
+      )}
+    </>
+  );
 }
 
 export default Cards;
