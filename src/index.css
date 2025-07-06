@@ -86,7 +86,8 @@ h1 {
 #memoLogo,
 .musicIcon,
 .button-73,
-.goBackLogo {
+.goBackLogo,
+.cardsArea img {
   cursor:
     url("./assets/pointer-cursor.svg") 0 0,
     auto;
@@ -216,9 +217,31 @@ h1 {
 }
 
 .cardsArea {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15vw, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(15vh, auto));
+  gap: 0.5vw;
   position: absolute;
-  background-color: rgba(251, 225, 240, 0.6);
+  top: 1vh;
+  max-width: 65%;
+  padding: 2vw;
+  justify-items: center;
+  align-items: center;
+}
+.cardsArea img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  align-self: center;
+  border-radius: 32px;
+}
+.cardCell {
+  padding: 1vw;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navBtns {
@@ -228,8 +251,9 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10%;
-
+  gap: 10vw;
+  padding-top: 2vh;
+  margin-top: 2vh;
   bottom: 2vh;
 }
 
@@ -240,4 +264,7 @@ h1 {
   justify-content: space-evenly;
   gap: 3vh;
   min-width: 100vw;
+  min-height: 100vh;
+  background-color: rgba(255, 240, 249, 0.4);
+  position: relative;
 }

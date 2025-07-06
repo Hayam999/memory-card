@@ -10,6 +10,7 @@ function Levels({ setShowLogo, setShowLevels }) {
   const [totalRenders, setTotalRenders] = useState(0);
   const [pointsPerRound, setPointsPerRound] = useState(0);
   const [totalImgsPerRound, setTotalImgsPerRound] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [play, setPlay] = useState(false);
 
@@ -18,11 +19,13 @@ function Levels({ setShowLogo, setShowLevels }) {
     totalRenders,
     pointsPerRound,
     totalImgsPerRound,
+    searchTerm,
   ) {
     setImgsPerRender(imgsPerRender);
     setTotalRenders(totalRenders);
     setPointsPerRound(pointsPerRound);
     setTotalImgsPerRound(totalImgsPerRound);
+    setSearchTerm(searchTerm);
     setPlay(true);
   }
 
@@ -31,7 +34,9 @@ function Levels({ setShowLogo, setShowLevels }) {
       {!play && (
         <div className="lvlsWrapper">
           <motion.div className="levels">
-            <img
+            <motion.img
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
               src={backLogo}
               alt="Go Back"
               className="goBackLogo"
@@ -44,19 +49,19 @@ function Levels({ setShowLogo, setShowLevels }) {
             <div className="lvlsBtns">
               <button
                 className="button-73"
-                onClick={() => roundSetter(3, 4, 5, 10)}
+                onClick={() => roundSetter(4, 4, 5, 8, "ghost")}
               >
                 Easy
               </button>
               <button
                 className="button-73"
-                onClick={() => roundSetter(5, 7, 10, 35)}
+                onClick={() => roundSetter(6, 7, 10, 40, "winter")}
               >
                 Medium
               </button>
               <button
                 className="button-73"
-                onClick={() => roundSetter(7, 10, 20, 70)}
+                onClick={() => roundSetter(8, 10, 20, 75, "chocolate")}
               >
                 Hard
               </button>
@@ -72,6 +77,7 @@ function Levels({ setShowLogo, setShowLevels }) {
             totalRenders={totalRenders}
             pointsPerRound={pointsPerRound}
             totalImgsPerRound={totalImgsPerRound}
+            searchTerm={searchTerm}
           />
           <div className="navBtns">
             <button
