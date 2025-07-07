@@ -10,7 +10,6 @@ function Levels({ setShowLogo, setShowLevels }) {
   const [totalRenders, setTotalRenders] = useState(0);
   const [pointsPerRound, setPointsPerRound] = useState(0);
   const [totalImgsPerRound, setTotalImgsPerRound] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const [play, setPlay] = useState(false);
 
@@ -19,13 +18,12 @@ function Levels({ setShowLogo, setShowLevels }) {
     totalRenders,
     pointsPerRound,
     totalImgsPerRound,
-    searchTerm,
   ) {
     setImgsPerRender(imgsPerRender);
     setTotalRenders(totalRenders);
     setPointsPerRound(pointsPerRound);
     setTotalImgsPerRound(totalImgsPerRound);
-    setSearchTerm(searchTerm);
+
     setPlay(true);
   }
 
@@ -49,19 +47,19 @@ function Levels({ setShowLogo, setShowLevels }) {
             <div className="lvlsBtns">
               <button
                 className="button-73"
-                onClick={() => roundSetter(4, 4, 5, 8, "ghost")}
+                onClick={() => roundSetter(4, 4, 5, 8)}
               >
                 Easy
               </button>
               <button
                 className="button-73"
-                onClick={() => roundSetter(6, 7, 10, 40, "winter")}
+                onClick={() => roundSetter(6, 7, 10, 40)}
               >
                 Medium
               </button>
               <button
                 className="button-73"
-                onClick={() => roundSetter(8, 10, 20, 75, "chocolate")}
+                onClick={() => roundSetter(8, 10, 20, 75)}
               >
                 Hard
               </button>
@@ -77,7 +75,6 @@ function Levels({ setShowLogo, setShowLevels }) {
             totalRenders={totalRenders}
             pointsPerRound={pointsPerRound}
             totalImgsPerRound={totalImgsPerRound}
-            searchTerm={searchTerm}
           />
           <div className="navBtns">
             <button
