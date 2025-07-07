@@ -59,7 +59,7 @@ function Levels({ setShowLogo, setShowLevels }) {
               </button>
               <button
                 className="button-73"
-                onClick={() => roundSetter(8, 10, 20, 75)}
+                onClick={() => roundSetter(9, 10, 20, 75)}
               >
                 Hard
               </button>

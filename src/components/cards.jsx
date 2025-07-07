@@ -20,7 +20,7 @@ function Cards({
     try {
       setLoading(true);
       setError(null);
-      const url = `${BASE_URL}?key=${API_KEY}&image_type=illustration&order=popular&per_page=${totalImgsPerRound}&min_width=1024&max_width=1200&min_height=768&max_height=900`;
+      const url = `${BASE_URL}?key=${API_KEY}&image_type=illustration&&order=popular&per_page=${totalImgsPerRound}&min_width=1024&max_width=1024&min_height=1024&max_height=1024&q=sketch`;
 
       const response = await fetch(url);
 
@@ -56,7 +56,7 @@ function Cards({
 
   /* [ ] fetch background music to display while playing */
   return (
-    <div className="cardsArea">
+    <div className="playingArea">
       {loading ? (
         /* [ ] style loading div */
         <div>Loading...</div>
@@ -85,6 +85,7 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
   const [wonRound, setWonRound] = useState(false);
   const [heighstScore, setHeighstScore] = useState(0);
   const [clickedImgs, setClickedImgs] = useState([]);
+  const gridSize = Math.ceil(Math.sqrt(imgsPerRender));
 
   // Convert to array if it's not already
   const imgsArray = Array.isArray(newImgs) ? newImgs : Object.values(newImgs);
@@ -250,12 +251,25 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
   }
 
   return (
-    <>
-      <div>
-        <div>Score: {score}</div>
-        <div>Highest Score: {heighstScore}</div>
+    <div className="cardsAndScore">
+      <div className="score">
+        <h1>Score: {score}</h1>
+        <h1>Highest Score: {heighstScore}</h1>
       </div>
-      {!gameOver && !wonRound && flipCards ? flippedCards : currentCards}
+      <div
+        className="cardsArea"
+        style={{
+          maxWidth: "90%",
+          display: "grid",
+          gridTemplateColumns: `repeat(${gridSize}, .25fr)`,
+          gridTemplateRows: `repeat(${gridSize}, .25fr)`,
+          gap: "1vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {!gameOver && !wonRound && flipCards ? flippedCards : currentCards}
+      </div>
       {gameOver && (
         <div>
           <div>Game Over</div>
@@ -268,7 +282,7 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
           <PlayAgain />
         </div>
       )}
-    </>
+    </div>
   );
 }
 
