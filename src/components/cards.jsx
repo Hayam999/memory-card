@@ -20,8 +20,12 @@ function Cards({
     try {
       setLoading(true);
       setError(null);
-      const url = `${BASE_URL}?key=${API_KEY}&image_type=illustration&&order=popular&per_page=${totalImgsPerRound}&min_width=1024&max_width=1024&min_height=1024&max_height=1024&q=sketch`;
+      const randomPage = Math.floor(Math.random() * 10) + 1;
+      const orderOptions = ["popular", "latest", "ec", "editors_choice"];
+      const randomOrder =
+        orderOptions[Math.floor(Math.random() * orderOptions.length)];
 
+      const url = `${BASE_URL}?key=${API_KEY}&image_type=illustration&order=${randomOrder}&per_page=${totalImgsPerRound}&min_width=1024&max_width=1024&min_height=1024&max_height=1024&q=sketch&page=${randomPage}`;
       const response = await fetch(url);
 
       if (!response.ok) {

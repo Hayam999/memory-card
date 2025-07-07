@@ -253,6 +253,7 @@ h1 {
   object-fit: cover;
   align-self: center;
   border-radius: 32px;
+  display: block;
 }
 
 .navBtns {
@@ -276,7 +277,7 @@ h1 {
   justify-content: space-evenly;
   gap: 3vh;
   min-width: 100vw;
-  height: auto;
-  background-color: rgba(255, 240, 249, 0.4);
+  min-height: 100vh;
+  background-color: rgba(148, 183, 223, 0.35);
   position: relative;
 }
