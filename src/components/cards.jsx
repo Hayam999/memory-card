@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import flippedImg from "../assets/backHome.svg";
+import errorImg from "../assets/error.svg";
 
 /* [ ] replace flippedImg with an image of one of the ghost and write memory card under it  */
 
@@ -25,7 +28,7 @@ function Cards({
       const randomOrder =
         orderOptions[Math.floor(Math.random() * orderOptions.length)];
 
-      const url = `${BASE_URL}?key=${API_KEY}&image_type=illustration&order=${randomOrder}&per_page=${totalImgsPerRound}&min_width=1024&max_width=1024&min_height=1024&max_height=1024&q=sketch&page=${randomPage}`;
+      const url = `${BASE_URL}?key=${API_KEY}&image_type=illustration&order=${randomOrder}&per_page=${totalImgsPerRound}&min_width=800&max_width=800&min_height=800&max_height800&q=sketch&page=${randomPage}`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -63,10 +66,33 @@ function Cards({
     <div className="playingArea">
       {loading ? (
         /* [ ] style loading div */
-        <div>Loading...</div>
+        <h1 style={{ fontSize: "2rem", color: "#1d252f" }}>Loading ...</h1>
       ) : error ? (
         /* [ ] make a sad character from the ghosts to display in the error div with a retry button */
-        <div style={{ color: "red" }}>{error}</div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "5vh",
+            alignItems: "center",
+            position: "absolute",
+            top: "5vh",
+          }}
+        >
+          <motion.img
+            src={errorImg}
+            alt={error}
+            style={{ maxWidth: "60%" }}
+          ></motion.img>
+          <botton
+            style={{ flexGrow: "0" }}
+            className="button-73"
+            onClick={() => getImages()}
+          >
+            Try Again
+          </botton>
+        </div>
       ) : (
         /* [ ] display fetched music */
         <Play
@@ -117,12 +143,8 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
       setScore(score + 1);
       setFlipCards(true);
       setClickedImgs((prev) => [...prev, img]); // Use state setter instead of mutation
-
-      // Set new cards after a delay to show flip effect
-      setTimeout(() => {
-        setCurrentCards(chooseCards([...clickedImgs, img]));
-        setFlipCards(false);
-      }, 1000);
+      setCurrentCards(chooseCards([...clickedImgs, img]));
+      setFlipCards(false);
     }
   };
 
@@ -130,7 +152,7 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
     return <button onClick={handlePlayAgain}>Play Again</button>;
   }
 
-  function chooseCards(currentClickedImgs = clickedImgs) {
+  function chooseCards(currentClickedImgs) {
     // Check if we have enough images
     if (!imgsArray || imgsArray.length === 0) {
       return [];
@@ -144,14 +166,16 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
     const cards = [];
     const ids = [];
 
-    if (currentClickedImgs.length <= 1) {
+    if (currentClickedImgs.length === 0) {
       // First render - just show the first few images
-      for (let i = 0; i < Math.min(imgsPerRender, imgsArray.length); i++) {
+      for (let i = 0; i < imgsPerRender; i++) {
         const img = imgsArray[i];
         if (img && img.webformatURL) {
           cards.push(
             <div key={img.id}>
-              <img
+              <motion.img
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 src={img.webformatURL}
                 alt="img"
                 onClick={() => handleClick(img)}
@@ -173,7 +197,9 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
         ids.push(img.id);
         cards.push(
           <div key={img.id}>
-            <img
+            <motion.img
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
               src={img.webformatURL}
               alt="img"
               onClick={() => handleClick(img)}
@@ -201,7 +227,9 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
           ids.push(img.id);
           cards.push(
             <div key={img.id}>
-              <img
+              <motion.img
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 src={img.webformatURL}
                 alt="img"
                 onClick={() => handleClick(img)}
@@ -222,7 +250,9 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
           ids.push(img.id);
           cards.push(
             <div key={img.id}>
-              <img
+              <motion.img
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 src={img.webformatURL}
                 alt="img"
                 onClick={() => handleClick(img)}
@@ -232,13 +262,14 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
         }
       }
     }
+    console.log(cards);
     return cards;
   }
 
   // Only set initial cards when images are loaded
   useEffect(() => {
     if (imgsArray && imgsArray.length > 0) {
-      setCurrentCards(chooseCards());
+      setCurrentCards(chooseCards(clickedImgs));
     }
   }, [imgsArray, imgsPerRender]);
 
@@ -249,43 +280,74 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
     </div>
   ));
 
-  // Don't render if no images are loaded yet
-  if (!imgsArray || imgsArray.length === 0) {
-    return <div>Loading game...</div>;
-  }
-
+  // Fixed: Added return statement here
   return (
     <div className="cardsAndScore">
       <div className="score">
         <h1>Score: {score}</h1>
         <h1>Highest Score: {heighstScore}</h1>
       </div>
-      <div
-        className="cardsArea"
-        style={{
-          maxWidth: "90%",
-          display: "grid",
-          gridTemplateColumns: `repeat(${gridSize}, .25fr)`,
-          gridTemplateRows: `repeat(${gridSize}, .25fr)`,
-          gap: "1vh",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {!gameOver && !wonRound && flipCards ? flippedCards : currentCards}
+      <div>
+        {!gameOver && !wonRound && flipCards ? (
+          <motion.div
+            className="cardsArea"
+            style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${gridSize}, .25fr)`,
+              gridTemplateRows: `repeat(${gridSize}, .25fr)`,
+              gap: "1.5rem",
+              justifyContent: "center",
+              alignItems: "center",
+              justifySelf: "center",
+              alignSelf: "center",
+            }}
+          >
+            {flippedCards}
+          </motion.div>
+        ) : (
+          <motion.div
+            className="cardsArea"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              className="cardsArea"
+              style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(${gridSize}, .25fr)`,
+                gridTemplateRows: `repeat(${gridSize}, .25fr)`,
+                gap: "1.5rem",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "3vw",
+                marginTop: "5vw",
+              }}
+            >
+              {" "}
+              {currentCards}{" "}
+            </div>
+            <h2>
+              {renderNum} / {totalRenders}
+            </h2>
+          </motion.div>
+        )}
+        {gameOver && (
+          <div>
+            <div>Game Over</div>
+            <PlayAgain />
+          </div>
+        )}
+        {wonRound && (
+          <div>
+            <div>You Win</div>
+            <PlayAgain />
+          </div>
+        )}
       </div>
-      {gameOver && (
-        <div>
-          <div>Game Over</div>
-          <PlayAgain />
-        </div>
-      )}
-      {wonRound && (
-        <div>
-          <div>You Win</div>
-          <PlayAgain />
-        </div>
-      )}
     </div>
   );
 }

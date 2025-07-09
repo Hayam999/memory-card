@@ -9,6 +9,10 @@
 [x] Add motion to MemoryCardLogo enter
 [x] set the background music and button
 [x] Add Levels component
-[ ] Add sound Effects
 [x] write Play component's logic
-[ ] Debug Play component
+[x] Debug Play component
+[ ] Add sound Effects
+[ ] Add Animation for flipping images, whether to each image or to the whole div
+[ ] fix Adding score logic
+[ ] Add winning and losing responses
+[ ] test game logic and make sure it works as expected
