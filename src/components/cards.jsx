@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { AnimatePresence } from "framer-motion";
+
 import flippedImg from "../assets/backHome.svg";
 import errorImg from "../assets/error.svg";
+import winMusic from "../assets/winRound.mp3";
+import winImg from "../assets/win.svg";
+import loseMusic from "../assets/gameOver.mp3";
+import loseImg from "../assets/loser.svg";
 
 /* [ ] replace flippedImg with an image of one of the ghost and write memory card under it  */
 
@@ -121,7 +125,15 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
   // Convert to array if it's not already
   const imgsArray = Array.isArray(newImgs) ? newImgs : Object.values(newImgs);
   function PlayAgain() {
-    return <button onClick={handlePlayAgain}>Play Again</button>;
+    return (
+      <button
+        onClick={handlePlayAgain}
+        className="button-73
+    "
+      >
+        Play Again
+      </button>
+    );
   }
 
   const handlePlayAgain = () => {
@@ -352,13 +364,18 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
             </h2>
           </motion.div>
         ) : gameOver ? (
-          <div>
-            <div>Game Over</div>
+          <div className="gameEnds">
+            <img src={loseImg} alt="Losing Ghost" />
+            <audio src={loseMusic} autoPlay playsInline>
+              {" "}
+            </audio>
             <PlayAgain></PlayAgain>
           </div>
         ) : (
-          <div>
-            <div>You Win</div>
+          <div className="gameEnds">
+            <img src={winImg} alt="Winning ghost" />
+            <audio src={winMusic} autoPlay playsInline></audio>
+
             <PlayAgain />
           </div>
         )}

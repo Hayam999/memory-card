@@ -282,3 +282,14 @@ h1 {
   background-color: rgba(148, 183, 223, 0.35);
   position: relative;
 }
+
+.gameEnds {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10vh;
+}
+.gameEnds img {
+  max-width: 65%;
+}
