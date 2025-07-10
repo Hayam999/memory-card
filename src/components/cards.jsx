@@ -108,18 +108,21 @@ function Cards({
 
 function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
   const [currentCards, setCurrentCards] = useState([]);
-  const [gameOver, setGameOver] = useState(false);
   const [flipCards, setFlipCards] = useState(false);
   const [renderNum, setRenderNum] = useState(0);
   const [score, setScore] = useState(0);
-  const [wonRound, setWonRound] = useState(false);
   const [heighstScore, setHeighstScore] = useState(0);
   const [clickedImgs, setClickedImgs] = useState([]);
-  const [showCards, setShowCards] = useState(true);
   const gridSize = Math.ceil(Math.sqrt(imgsPerRender));
+
+  const [gameOver, setGameOver] = useState(false);
+  const [showCards, setShowCards] = useState(true);
 
   // Convert to array if it's not already
   const imgsArray = Array.isArray(newImgs) ? newImgs : Object.values(newImgs);
+  function PlayAgain() {
+    return <button onClick={handlePlayAgain}>Play Again</button>;
+  }
 
   const handlePlayAgain = () => {
     setClickedImgs([]);
@@ -128,12 +131,14 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
     setRenderNum(0);
     setHeighstScore((prev) => (prev > score ? prev : score));
     setScore(0);
-    setWonRound(false);
+    setShowCards(true);
   };
 
   const handleClick = (img) => {
     if (clickedImgs.some((clickedImg) => clickedImg.id === img.id)) {
       setGameOver(true);
+      setShowCards(false);
+      flipCards(false);
 
       return;
     }
@@ -156,22 +161,13 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
   useEffect(() => {
     if (renderNum >= totalRenders) {
       setShowCards(false);
-      setWonRound(true);
+      setFlipCards(false);
       setScore((prev) => prev + pointsPerRound);
-      setFlipCards(true);
     } else {
       setCurrentCards(chooseCards(clickedImgs));
       setFlipCards(false);
     }
   }, [renderNum]);
-
-  useEffect(() => {
-    setShowCards(false);
-  }, [gameOver, wonRound]);
-
-  function PlayAgain() {
-    return <button onClick={handlePlayAgain}>Play Again</button>;
-  }
 
   function chooseCards(currentClickedImgs) {
     // Check if we have enough images
@@ -309,7 +305,7 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
         <h1>Highest Score: {heighstScore}</h1>
       </div>
       <div>
-        {showCards && flipCards ? (
+        {flipCards ? (
           <motion.div
             className="cardsArea"
             style={{
@@ -325,7 +321,7 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
           >
             {flippedCards}
           </motion.div>
-        ) : (
+        ) : showCards ? (
           <motion.div
             className="cardsArea"
             style={{
@@ -355,14 +351,12 @@ function Play({ newImgs, totalRenders, pointsPerRound, imgsPerRender }) {
               {renderNum} / {totalRenders}
             </h2>
           </motion.div>
-        )}
-        {gameOver && (
+        ) : gameOver ? (
           <div>
             <div>Game Over</div>
-            <PlayAgain />
+            <PlayAgain></PlayAgain>
           </div>
-        )}
-        {wonRound && (
+        ) : (
           <div>
             <div>You Win</div>
             <PlayAgain />
