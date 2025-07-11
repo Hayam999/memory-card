@@ -51,6 +51,7 @@ export default function App() {
   useEffect(() => {
     if (bgMusicRef.current) {
       bgMusicRef.current.play().catch((err) => {
+        bgMusicRef.current.volume = 0.1;
         console.log("Failed to load BackGround Music: ", err);
       });
     }
