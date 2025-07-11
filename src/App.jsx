@@ -8,6 +8,7 @@ import bgVedio from "./assets/background.mp4";
 import bgMusic from "./assets/bgMusic.mp3";
 import musicOn from "./assets/musicOn.svg";
 import musicOff from "./assets/musicOff.svg";
+import clickSoundFile from "./assets/click.mp3";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -17,12 +18,14 @@ export default function App() {
   const [musicIconState, setMusicIconState] = useState(false);
   const [showMusicIcon, setShowMusicIcon] = useState(false);
   const [showLevels, setShowLevels] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
 
   const vedioRef = useRef(null);
   const bgMusicRef = useRef(null);
-
+  const clickSoundRef = useRef(null);
   useEffect(() => {
     if (vedioRef.current) {
+      bgMusicRef.current.volume = 0.1;
       vedioRef.current.play().catch((err) => {
         console.log("Failed to load background Vedio: ", err);
       });
@@ -51,7 +54,60 @@ export default function App() {
         console.log("Failed to load BackGround Music: ", err);
       });
     }
-  }, []);
+  });
+
+  // Fixed click sound implementation
+  useEffect(() => {
+    // Initialize click sound
+    const clickSound = new Audio(clickSoundFile);
+    clickSound.preload = "auto";
+    clickSoundRef.current = clickSound;
+
+    const handleClick = (event) => {
+      // Mark that user has interacted
+      if (!userInteracted) {
+        setUserInteracted(true);
+      }
+
+      // Play click sound for buttons and clickable elements
+      if (
+        event.target.tagName === "BUTTON" ||
+        event.target.onclick ||
+        event.target.classList.contains("clickable") ||
+        event.target.closest("button")
+      ) {
+        if (clickSoundRef.current && userInteracted) {
+          clickSoundRef.current.currentTime = 0;
+          clickSoundRef.current.play().catch((e) => {
+            console.log("Click sound play failed:", e);
+          });
+        }
+      }
+    };
+
+    // Add event listener for any user interaction to enable audio
+    const handleFirstInteraction = () => {
+      setUserInteracted(true);
+      // Preload the audio after first interaction
+      if (clickSoundRef.current) {
+        clickSoundRef.current.load();
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+    document.addEventListener("touchstart", handleFirstInteraction, {
+      once: true,
+    });
+    document.addEventListener("keydown", handleFirstInteraction, {
+      once: true,
+    });
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+      document.removeEventListener("touchstart", handleFirstInteraction);
+      document.removeEventListener("keydown", handleFirstInteraction);
+    };
+  }, [userInteracted]);
 
   return (
     <div>

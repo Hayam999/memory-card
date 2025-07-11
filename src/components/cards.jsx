@@ -8,8 +8,6 @@ import winImg from "../assets/win.svg";
 import loseMusic from "../assets/gameOver.mp3";
 import loseImg from "../assets/loser.svg";
 
-/* [ ] replace flippedImg with an image of one of the ghost and write memory card under it  */
-
 function Cards({
   imgsPerRender,
   totalRenders,
@@ -65,14 +63,11 @@ function Cards({
     getImages();
   }, []);
 
-  /* [ ] fetch background music to display while playing */
   return (
     <div className="playingArea">
       {loading ? (
-        /* [ ] style loading div */
         <h1 style={{ fontSize: "2rem", color: "#1d252f" }}>Loading ...</h1>
       ) : error ? (
-        /* [ ] make a sad character from the ghosts to display in the error div with a retry button */
         <div
           style={{
             display: "flex",
@@ -98,7 +93,6 @@ function Cards({
           </botton>
         </div>
       ) : (
-        /* [ ] display fetched music */
         <Play
           newImgs={imgs}
           totalRenders={totalRenders}
